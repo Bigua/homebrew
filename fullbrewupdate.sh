@@ -21,8 +21,9 @@ for c in $(brew cask list); do
         current_ver=$(echo "$info" | sed '2,$d' | cut -d':' -f2| xargs)
         installed_ver=$(echo "$info" |cut -d' ' -f1  | rev | cut -d'/' -f 1 | rev | sed '4,$d' | sed '1,2d')
         if [ "$installed_ver" != "$current_ver" ]; then
-                echo -e "$Yellow  $c is installed $installed_ver , current is $current_ver"
+                echo -e "$Yellow  $c installed is $installed_ver , current is $current_ver"
                 echo -e "$Cyan $c needs reinstall"
+                brew cask fetch  $c
                 brew cask uninstall --force $c
                 brew cask install $c
         fi
@@ -30,5 +31,5 @@ done
 echo -e "$Cyan limpando"
 brew cleanup
 brew cask cleanup
-echo -e "$Yellow  verificar se nada quebrou $Color_Off"
+echo -e "$Yellow  verificar se nada quebrou... $Color_Off"
 brew doctor
