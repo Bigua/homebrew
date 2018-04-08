@@ -20,7 +20,7 @@ for c in $(brew cask list); do
         info=$(brew cask info $c)
         current_ver=$(echo "$info" | sed '2,$d' | cut -d':' -f2| xargs)
         installed_ver=$(echo "$info" |cut -d' ' -f1  | rev | cut -d'/' -f 1 | rev | sed '4,$d' | sed '1,2d')
-        if [ "$installed_ver" != "$current_ver" ]; then
+        if [[ "$installed_ver" != *"$current_ver"* ]]; then
                 echo -e "$Yellow  $c installed is $installed_ver , current is $current_ver"
                 echo -e "$Cyan $c needs reinstall"
                 brew cask fetch  $c
